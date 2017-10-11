@@ -42,7 +42,7 @@ class Main
 		Browser.window.onunload = function ()
 		{
 			Browser.getLocalStorage().setItem("filter", model.filter);
-			Browser.getLocalStorage().setItem("fixCha", model.fixChar);
+			Browser.getLocalStorage().setItem("fixChar", model.fixChar);
 			Browser.getLocalStorage().setItem("min", Std.string(model.min));
 			Browser.getLocalStorage().setItem("max", Std.string(model.max));
 		}

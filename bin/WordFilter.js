@@ -200,7 +200,7 @@ Main.main = function() {
 	window.document.body.appendChild(root.toElement());
 	window.onunload = function() {
 		js_Browser.getLocalStorage().setItem("filter",model.get_filter());
-		js_Browser.getLocalStorage().setItem("fixCha",model.get_fixChar());
+		js_Browser.getLocalStorage().setItem("fixChar",model.get_fixChar());
 		js_Browser.getLocalStorage().setItem("min",Std.string(_$UInt_UInt_$Impl_$.toFloat(model.get_min())));
 		js_Browser.getLocalStorage().setItem("max",Std.string(_$UInt_UInt_$Impl_$.toFloat(model.get_max())));
 	};
