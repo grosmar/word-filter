@@ -1,0 +1,22 @@
+{
+  "name": "word-filter",
+  "version": "1.0.0",
+  "description": "Filter list of words with given criteria",
+  "main": "index.js",
+  "bin": {
+    "word-filter": "WordFilter.js"
+  },
+  "scripts": {
+    "install": "haxelib newrepo && haxelib install coconut.data && haxelib install coconut.vdom"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grosmar/word-filter.git"
+  },
+  "author": "grosmar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/grosmar/word-filter/issues"
+  },
+  "homepage": "https://github.com/grosmar/word-filter#readme"
+}
