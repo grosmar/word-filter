@@ -503,7 +503,7 @@ WordFilterView.prototype = $extend(coconut_ui_View.prototype,{
 		var children5 = vdom_VDom.h("textarea",{ id : "wordList", oninput : function(event5) {
 			model.set_wordList(event5.target.value);
 		}, style : vdom__$Style_Style_$Impl_$.ofString("display:" + (model.get_showWordList() ? "block" : "none") + "; float:left; width:49%; height: 500px; margin: 5px")},[model.get_wordList()]);
-		var attr2 = { id : "filteredWordList", style : vdom__$Style_Style_$Impl_$.ofString("float:left; width:49%; margin: 5px; border: 1px solid black; min-height: 500px")};
+		var attr2 = { id : "filteredWordList", style : vdom__$Style_Style_$Impl_$.ofString("float:left; width:49%; margin: 5px; border: 1px solid black; min-height: 200px")};
 		var _g = [];
 		var _g1 = new tink_pure_NodeIterator(model.get_filteredList());
 		while(_g1.list.length > 0) {
@@ -513,11 +513,14 @@ WordFilterView.prototype = $extend(coconut_ui_View.prototype,{
 		var children6 = [children5,vdom_VDom.h("div",attr2,[vdom__$VNode_VNode_$Impl_$.flatten(_g)])];
 		var children7 = vdom_VDom.h("div",{ },children6);
 		var children8 = vdom_VDom.h("div",{ style : vdom__$Style_Style_$Impl_$.ofString("clear:both")},null);
-		var children9 = model.get_showWordList() ? "Hide" : "Show";
-		var children10 = ["Filter: ",children,"Fix char: ",children1,"Min: ",children2,"Max: ",children3,children4,children7,children8,vdom_VDom.h("button",{ onclick : function(event6) {
+		var this1 = model.get_filteredList();
+		var i1 = this1 == null ? 0 : this1.length;
+		var children9 = vdom_VDom.h("br",{ });
+		var children10 = model.get_showWordList() ? "Hide" : "Show";
+		var children11 = ["Filter: ",children,"Fix char: ",children1,"Min: ",children2,"Max: ",children3,children4,children7,children8,"Results: ",i1 == null ? "null" : "" + i1,children9,vdom_VDom.h("button",{ onclick : function(event6) {
 			model.set_showWordList(!model.get_showWordList());
-		}},[children9," original WordList"])];
-		return vdom_VDom.h("div",{ },children10);
+		}},[children10," original WordList"])];
+		return vdom_VDom.h("div",{ },children11);
 	}
 	,copy: function() {
 		var range = window.document.createRange();

@@ -18,13 +18,14 @@ class WordFilterView extends View<{model:WordFilterModel}>
 		<button onclick={copy()}>Copy to clipboard</button>
 		<div>
 			<textarea id="wordList" oninput={model.wordList=cast event.target.value} style={"display:" + (model.showWordList ? "block" : "none") + "; float:left; width:49%; height: 500px; margin: 5px"}>{model.wordList}</textarea>
-			<div id="filteredWordList" style="float:left; width:49%; margin: 5px; border: 1px solid black; min-height: 500px">
+			<div id="filteredWordList" style="float:left; width:49%; margin: 5px; border: 1px solid black; min-height: 200px">
 				<for {i in model.filteredList}>
 					<div>{i}</div>
-				</for>	
+				</for>
 			</div>
 		</div>
 		<div style="clear:both"></div>
+		Results: {model.filteredList.length}<br/>
 		<button onclick={model.showWordList = !model.showWordList}>{model.showWordList ? "Hide" : "Show" } original WordList</button>
 	</div>
 	';
