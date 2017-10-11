@@ -119,7 +119,7 @@ szedés
 
 szedi
 
-szedõ
+szedő
 
 széf
 
@@ -153,9 +153,9 @@ szélez
 
 szeli
 
-szellõ
+szellő
 
-szélsõ
+szélső
 
 szem
 
@@ -199,7 +199,7 @@ szépia
 
 szépít
 
-szeplõ
+szeplő
 
 szesz
 
@@ -311,7 +311,7 @@ szlúp
 
 szó
 
-szócsõ
+szócső
 
 szódás
 
@@ -321,7 +321,7 @@ szóhoz
 
 szokás
 
-szõke
+szőke
 
 szókép
 
@@ -329,11 +329,11 @@ szökés
 
 szökik
 
-szõkít
+szőkít
 
 szokni
 
-szökõ
+szökő
 
 szóköz
 
@@ -353,7 +353,7 @@ szólít
 
 szóló
 
-szõlõt
+szőlőt
 
 szólt
 
@@ -375,9 +375,9 @@ szósz
 
 szót
 
-szótõ
+szótő
 
-szõtt
+szőtt
 
 szóvá
 
@@ -553,7 +553,7 @@ notesz
 
 olasz
 
-õsz
+ősz
 
 pajesz
 
@@ -697,11 +697,11 @@ atomszám
 
 átszeli
 
-átszelõ
+átszelő
 
 átszitál
 
-átszõtt
+átszőtt
 
 áttaszít
 
@@ -721,7 +721,7 @@ csaszi
 
 cselszövés
 
-cselszövõ
+cselszövő
 
 csésze
 
@@ -789,7 +789,7 @@ díszes
 
 díszít
 
-díszítõ
+díszítő
 
 diszkó
 
@@ -849,19 +849,19 @@ elköszön
 
 elmaszatol
 
-elõszámla
+előszámla
 
-elõszél
+előszél
 
-elõszín
+előszín
 
 eloszlási
 
 eloszlik
 
-elõszó
+előszó
 
-elõszót
+előszót
 
 eloszt
 
@@ -915,7 +915,7 @@ elveszít
 
 elveszíti
 
-elveszõdik
+elvesződik
 
 elvesztés
 
@@ -971,7 +971,7 @@ eszköz
 
 eszközt
 
-észlelõ
+észlelő
 
 eszmei
 
@@ -989,7 +989,7 @@ esztéta
 
 evészet
 
-evõeszköz
+evőeszköz
 
 évszak
 
@@ -1017,7 +1017,7 @@ faszszopó
 
 faúsztató
 
-fejõszék
+fejőszék
 
 fejsze
 
@@ -1077,7 +1077,7 @@ felszólít
 
 feluszít
 
-fenõszíj
+fenőszíj
 
 fészek
 
@@ -1087,11 +1087,11 @@ feszesen
 
 feszít
 
-feszítõ
+feszítő
 
 feszke
 
-fészkelõ
+fészkelő
 
 fészken
 
@@ -1109,7 +1109,7 @@ földszinti
 
 fontszám
 
-fõszám
+főszám
 
 foszfát
 
@@ -1223,21 +1223,21 @@ huszadik
 
 huszita
 
-idõszak
+időszak
 
-idõszaki
+időszaki
 
-idõszakos
+időszakos
 
 íjászat
 
 ijeszt
 
-ijesztõen
+ijesztően
 
 ikszedik
 
-illeszkedõ
+illeszkedő
 
 illeszték
 
@@ -1321,7 +1321,7 @@ kasszék
 
 kasza
 
-kaszakõ
+kaszakő
 
 kaszálás
 
@@ -1343,7 +1343,7 @@ készen
 
 készít
 
-készítõ
+készítő
 
 keszon
 
@@ -1351,7 +1351,7 @@ készpénz
 
 késztet
 
-késztetõ
+késztető
 
 kialszik
 
@@ -1455,15 +1455,15 @@ kószálás
 
 kószáló
 
-kõszén
+kőszén
 
-kõszív
+kőszív
 
 koszlott
 
 köszönet
 
-köszönõ
+köszönő
 
 köszönt
 
@@ -1473,7 +1473,7 @@ kosztol
 
 kosztot
 
-kötõszó
+kötőszó
 
 kövesztett
 
@@ -1523,7 +1523,7 @@ leköszön
 
 lemászik
 
-lenszõke
+lenszőke
 
 leoszt
 
@@ -1607,7 +1607,7 @@ masszázs
 
 masszív
 
-masszõz
+masszőz
 
 mászás
 
@@ -1629,7 +1629,7 @@ melaszos
 
 menesztés
 
-menesztõ
+menesztő
 
 meniszkusz
 
@@ -1649,7 +1649,7 @@ meszet
 
 mészhéj
 
-mészkõ
+mészkő
 
 mésztej
 
@@ -1661,9 +1661,9 @@ metszetes
 
 metszett
 
-metszõen
+metszően
 
-metszõsík
+metszősík
 
 mihaszna
 
@@ -1751,7 +1751,7 @@ oposszum
 
 összeáll
 
-összedõl
+összedől
 
 összefon
 
@@ -1771,7 +1771,7 @@ oposszum
 
 összeköt
 
-összenõ
+összenő
 
 összeölt
 
@@ -1791,15 +1791,15 @@ oposszum
 
 összkép
 
-õsszláv
+ősszláv
 
 össztét
 
 oszd
 
-õszes
+őszes
 
-õszinte
+őszinte
 
 oszlás
 
@@ -1839,7 +1839,7 @@ panaszokon
 
 panaszosan
 
-panasztevõ
+panasztevő
 
 pápaszemes
 
@@ -1931,9 +1931,9 @@ szénszál
 
 szeszes
 
-szeszfõzõ
+szeszfőző
 
-szesztõl
+szesztől
 
 szétszakad
 
@@ -1941,7 +1941,7 @@ szétszakít
 
 szétszed
 
-szétszedõ
+szétszedő
 
 szieszta
 
@@ -2005,7 +2005,7 @@ tejszínt
 
 teleszívja
 
-teniszcipõ
+teniszcipő
 
 testszövet
 
@@ -2027,7 +2027,7 @@ tetszést
 
 tetszik
 
-tetszõen
+tetszően
 
 téveszme
 
@@ -2049,7 +2049,7 @@ tisztek
 
 tisztel
 
-tisztelõ
+tisztelő
 
 tisztes
 
@@ -2063,13 +2063,13 @@ tisztje
 
 tisztul
 
-tõkeszámla
+tőkeszámla
 
 tolószék
 
-tõszám
+tőszám
 
-tõszó
+tőszó
 
 tószt
 
@@ -2107,7 +2107,7 @@ utószó
 
 útszélen
 
-útvesztõ
+útvesztő
 
 vadászat
 
@@ -2133,7 +2133,7 @@ vadászszék
 
 vadászva
 
-vadszõlõ
+vadszőlő
 
 válasza
 
@@ -2165,17 +2165,17 @@ válaszul
 
 vállszíj
 
-vámszedõ
+vámszedő
 
 vasoszlop
 
 vászna
 
-védõszent
+védőszent
 
-vesszõ
+vessző
 
-vesszõt
+vesszőt
 
 vészcsap
 
@@ -2193,7 +2193,7 @@ veszít
 
 vészjel
 
-veszõdik
+vesződik
 
 veszt
 
@@ -2215,9 +2215,9 @@ vissza
 
 visszaél
 
-visszaélõ
+visszaélő
 
-visszaesõ
+visszaeső
 
 visszafut
 
@@ -2251,7 +2251,7 @@ viszem
 
 viszik
 
-viszketõ
+viszkető
 
 viszlát
 

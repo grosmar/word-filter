@@ -169,13 +169,19 @@ Main.__name__ = true;
 Main.main = function() {
 	var s = haxe_Resource.getString("wordlist");
 	var savedFilter = "";
+	var savedFixChar = "";
 	var savedMin = 3;
 	var savedMax = 5;
 	var ls = js_Browser.getLocalStorage();
-	if(ls.getItem("filter") != null) {
+	if(ls.getItem("filter") != null && ls.getItem("filter") != "") {
 		savedFilter = ls.getItem("filter");
 	} else {
 		savedFilter = "aácdeéfhiíoóöőõjklmnpstuúvzsz";
+	}
+	if(ls.getItem("fixChar") != null) {
+		savedFixChar = ls.getItem("fixChar");
+	} else {
+		savedFixChar = savedFixChar;
 	}
 	if(ls.getItem("min") != null) {
 		savedMin = Std.parseInt(ls.getItem("min"));
@@ -187,13 +193,14 @@ Main.main = function() {
 	} else {
 		savedMax = savedMax;
 	}
-	var model = new WordFilterModel({ wordList : s, filter : savedFilter, min : savedMin, max : savedMax});
+	var model = new WordFilterModel({ wordList : s, filter : savedFilter, fixChar : savedFixChar, min : savedMin, max : savedMax});
 	var root = new WordFilterView(tink_state__$Observable_Observable_$Impl_$.auto(tink_state__$Observable_Computation_$Impl_$.plain(function() {
 		return { model : model};
 	})));
 	window.document.body.appendChild(root.toElement());
 	window.onunload = function() {
 		js_Browser.getLocalStorage().setItem("filter",model.get_filter());
+		js_Browser.getLocalStorage().setItem("fixCha",model.get_fixChar());
 		js_Browser.getLocalStorage().setItem("min",Std.string(_$UInt_UInt_$Impl_$.toFloat(model.get_min())));
 		js_Browser.getLocalStorage().setItem("max",Std.string(_$UInt_UInt_$Impl_$.toFloat(model.get_max())));
 	};
@@ -239,6 +246,7 @@ var WordFilterModel = function(initial) {
 	var _gthis = this;
 	this.__coco_wordList = tink_state__$State_State_$Impl_$.ofConstant(initial.wordList);
 	this.__coco_filter = tink_state__$State_State_$Impl_$.ofConstant(initial.filter);
+	this.__coco_fixChar = tink_state__$State_State_$Impl_$.ofConstant(initial.fixChar);
 	this.__coco_min = tink_state__$State_State_$Impl_$.ofConstant(initial.min);
 	this.__coco_max = tink_state__$State_State_$Impl_$.ofConstant(initial.max);
 	var _g = initial.showWordList;
@@ -252,16 +260,17 @@ var WordFilterModel = function(initial) {
 	this.__coco_showWordList = tmp;
 	this.__coco_filteredList = tink_state__$Observable_Observable_$Impl_$.auto(tink_state__$Observable_Computation_$Impl_$.plain(function() {
 		var tmp1 = _gthis.get_wordList();
-		var tmp2 = _gthis.get_filter();
-		var tmp3 = _gthis.get_min();
-		var tmp4 = _gthis.get_max();
-		return _gthis.searchAnywhere(tmp1,"",tmp2,tmp3,tmp4);
+		var tmp2 = _gthis.get_fixChar();
+		var tmp3 = _gthis.get_filter();
+		var tmp4 = _gthis.get_min();
+		var tmp5 = _gthis.get_max();
+		return _gthis.searchAnywhere(tmp1,tmp2,tmp3,tmp4,tmp5);
 	}));
 	var this1 = new tink_state__$State_StateObject(0);
 	this.__coco_transitionCount = this1;
 	this.errorTrigger = tink_core__$Signal_Signal_$Impl_$.trigger();
 	this.transitionErrors = this.errorTrigger;
-	this.observables = { wordList : this.__coco_wordList, filter : this.__coco_filter, min : this.__coco_min, max : this.__coco_max, showWordList : this.__coco_showWordList, filteredList : this.__coco_filteredList, isInTransition : tink_state__$Observable_Observable_$Impl_$.map(this.__coco_transitionCount,tink_state__$Observable_Transform_$Impl_$.plain(function(c) {
+	this.observables = { wordList : this.__coco_wordList, filter : this.__coco_filter, fixChar : this.__coco_fixChar, min : this.__coco_min, max : this.__coco_max, showWordList : this.__coco_showWordList, filteredList : this.__coco_filteredList, isInTransition : tink_state__$Observable_Observable_$Impl_$.map(this.__coco_transitionCount,tink_state__$Observable_Transform_$Impl_$.plain(function(c) {
 		return c > 0;
 	}))};
 };
@@ -305,6 +314,13 @@ WordFilterModel.prototype = {
 	}
 	,set_filter: function(param) {
 		this.__coco_filter.set(param);
+		return param;
+	}
+	,get_fixChar: function() {
+		return tink_state__$State_State_$Impl_$.get_value(this.__coco_fixChar);
+	}
+	,set_fixChar: function(param) {
+		this.__coco_fixChar.set(param);
 		return param;
 	}
 	,get_min: function() {
@@ -463,26 +479,29 @@ WordFilterView.prototype = $extend(coconut_ui_View.prototype,{
 		var model = __data__.model;
 		var children = vdom_VDom.h("input",{ oninput : function(event) {
 			model.set_filter(event.target.value);
-		}, value : model.get_filter(), style : vdom__$Style_Style_$Impl_$.ofString("width: 200p;")});
-		var children1 = vdom_VDom.h("input",{ id : "min", oninput : function(event1) {
+		}, value : model.get_filter(), style : vdom__$Style_Style_$Impl_$.ofString("width: 250px;")});
+		var children1 = vdom_VDom.h("input",{ oninput : function(event1) {
+			model.set_fixChar(event1.target.value);
+		}, value : model.get_fixChar(), style : vdom__$Style_Style_$Impl_$.ofString("width: 50px;")});
+		var children2 = vdom_VDom.h("input",{ id : "min", oninput : function(event2) {
 			var attr;
-			var a = Std.parseInt(event1.target.value);
+			var a = Std.parseInt(event2.target.value);
 			if(_$UInt_UInt_$Impl_$.gte(model.get_max(),a)) {
-				attr = Std.parseInt(event1.target.value);
+				attr = Std.parseInt(event2.target.value);
 			} else {
 				attr = model.get_max();
 			}
 			model.set_min(attr);
-		}, value : Std.string(_$UInt_UInt_$Impl_$.toFloat(model.get_min()))});
-		var children2 = vdom_VDom.h("input",{ id : "max", oninput : function(event2) {
-			var attr1 = _$UInt_UInt_$Impl_$.gte(Std.parseInt(event2.target.value),model.get_min()) ? Std.parseInt(event2.target.value) : model.get_min();
+		}, value : Std.string(_$UInt_UInt_$Impl_$.toFloat(model.get_min())), style : vdom__$Style_Style_$Impl_$.ofString("width: 50px;")});
+		var children3 = vdom_VDom.h("input",{ id : "max", oninput : function(event3) {
+			var attr1 = _$UInt_UInt_$Impl_$.gte(Std.parseInt(event3.target.value),model.get_min()) ? Std.parseInt(event3.target.value) : model.get_min();
 			model.set_max(attr1);
-		}, value : Std.string(_$UInt_UInt_$Impl_$.toFloat(model.get_max()))});
-		var children3 = vdom_VDom.h("button",{ onclick : function(event3) {
+		}, value : Std.string(_$UInt_UInt_$Impl_$.toFloat(model.get_max())), style : vdom__$Style_Style_$Impl_$.ofString("width: 50px;")});
+		var children4 = vdom_VDom.h("button",{ onclick : function(event4) {
 			_gthis.copy();
 		}},["Copy to clipboard"]);
-		var children4 = vdom_VDom.h("textarea",{ id : "wordList", oninput : function(event4) {
-			model.set_wordList(event4.target.value);
+		var children5 = vdom_VDom.h("textarea",{ id : "wordList", oninput : function(event5) {
+			model.set_wordList(event5.target.value);
 		}, style : vdom__$Style_Style_$Impl_$.ofString("display:" + (model.get_showWordList() ? "block" : "none") + "; float:left; width:49%; height: 500px; margin: 5px")},[model.get_wordList()]);
 		var attr2 = { id : "filteredWordList", style : vdom__$Style_Style_$Impl_$.ofString("float:left; width:49%; margin: 5px; border: 1px solid black; min-height: 500px")};
 		var _g = [];
@@ -491,14 +510,14 @@ WordFilterView.prototype = $extend(coconut_ui_View.prototype,{
 			var i = _g1.next();
 			_g.push(vdom__$VNode_VNode_$Impl_$.flatten([vdom_VDom.h("div",{ },[i])]));
 		}
-		var children5 = [children4,vdom_VDom.h("div",attr2,[vdom__$VNode_VNode_$Impl_$.flatten(_g)])];
-		var children6 = vdom_VDom.h("div",{ },children5);
-		var children7 = vdom_VDom.h("div",{ style : vdom__$Style_Style_$Impl_$.ofString("clear:both")},null);
-		var children8 = model.get_showWordList() ? "Hide" : "Show";
-		var children9 = ["Filter: ",children,"Min: ",children1,"Max: ",children2,children3,children6,children7,vdom_VDom.h("button",{ onclick : function(event5) {
+		var children6 = [children5,vdom_VDom.h("div",attr2,[vdom__$VNode_VNode_$Impl_$.flatten(_g)])];
+		var children7 = vdom_VDom.h("div",{ },children6);
+		var children8 = vdom_VDom.h("div",{ style : vdom__$Style_Style_$Impl_$.ofString("clear:both")},null);
+		var children9 = model.get_showWordList() ? "Hide" : "Show";
+		var children10 = ["Filter: ",children,"Fix char: ",children1,"Min: ",children2,"Max: ",children3,children4,children7,children8,vdom_VDom.h("button",{ onclick : function(event6) {
 			model.set_showWordList(!model.get_showWordList());
-		}},[children8," original WordList"])];
-		return vdom_VDom.h("div",{ },children9);
+		}},[children9," original WordList"])];
+		return vdom_VDom.h("div",{ },children10);
 	}
 	,copy: function() {
 		var range = window.document.createRange();
@@ -3442,5 +3461,3 @@ vdom__$Attr_Key_$Impl_$.keygen = 0;
 vdom__$Style_Style_$Impl_$.style = window.document.createElement("div").style;
 Main.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
-
-//# sourceMappingURL=WordFilter.js.map

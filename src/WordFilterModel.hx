@@ -13,13 +13,15 @@ class WordFilterModel implements Model
 	
 	@:editable var filter:String;
 	
+	@:editable var fixChar:String;
+	
 	@:editable var min:UInt;
 	
 	@:editable var max:UInt;
 	
 	@:editable var showWordList:Bool = @byDefault false;
 	
-	@:computed var filteredList:List<String> = searchAnywhere( wordList, "", filter, min, max );
+	@:computed var filteredList:List<String> = searchAnywhere( wordList, fixChar, filter, min, max );
 	
 	
 	function searchAnywhere( s:String, fixed:String, others:String, minLength:Int, maxLength:Int ):List<String>
