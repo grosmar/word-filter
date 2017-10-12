@@ -19,6 +19,12 @@ class WordFilterModel implements Model
 	
 	@:editable var max:UInt;
 	
+	@:editable var beginning:Bool = @byDefault true;
+	
+	@:editable var middle:Bool = @byDefault true;
+	
+	@:editable var end:Bool = @byDefault true;
+	
 	@:editable var showWordList:Bool = @byDefault false;
 	
 	@:computed var filteredList:List<String> = searchAnywhere( wordList, fixChar, filter, min, max );
@@ -34,19 +40,32 @@ class WordFilterModel implements Model
 		
 		if ( fixed != null && fixed != "")
 		{
-			r = new EReg("\n(" + fixed + "[" + others + "]{" + (minLength - 1) + "," + (maxLength - 1) + "})\n", "gu");
+			/*r = new EReg("\n(" + fixed + "[" + others + "]{" + (minLength - 1) + "," + (maxLength - 1) + "})\n", "gu");
 			matches = matches.concat( map(r, s) );
 			
 			r = new EReg("\n([" + others + "]{" + (minLength - 1) + "," + (maxLength - 1) + "}" + fixed + ")\n", "gu");
-			matches = matches.concat( map(r, s) );
+			matches = matches.concat( map(r, s) );*/
 			
-			r = new EReg("\n([" + others + "]{1," + (maxLength - 1) + "}" + fixed + "[" + others + "]{1," + (maxLength - 1) + "})\n", "gu");
-			matches = matches.concat( map(r, s) );
+			var begMatch = (beginning ? "(?:" + fixed + "[" + others + "]{1," + (maxLength - 1) + "})" : null);
+			var endMatch = (end ? "(?:[" + others + "]{1," + (maxLength - 1) + "}" + fixed + ")" : null);
+			var midMatch = (middle ? "(?:[" + others + "]{1," + (maxLength - 1) + "}" + fixed + "[" + others + "]{1," + (maxLength - 1) + "})" : null);
+			
+			var matchArr = [];
+			if ( begMatch != null )
+				matchArr.push( begMatch );
+			if ( endMatch != null )
+				matchArr.push( endMatch );
+			if ( midMatch != null )
+				matchArr.push( midMatch );
+			
+			r = new EReg("^(" + matchArr.join("|") + ")$", "gmu");
+			
+			matches = map(r, s);
 		}
 		else
 		{
 			r = new EReg("\n([" + others + "]{" + (minLength) + "," + (maxLength) + "})\n", "gu");
-			matches = matches.concat( map(r, s) );
+			matches = map(r, s);
 		}
 		
 		return List.fromArray(matches);

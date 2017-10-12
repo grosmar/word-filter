@@ -249,28 +249,55 @@ var WordFilterModel = function(initial) {
 	this.__coco_fixChar = tink_state__$State_State_$Impl_$.ofConstant(initial.fixChar);
 	this.__coco_min = tink_state__$State_State_$Impl_$.ofConstant(initial.min);
 	this.__coco_max = tink_state__$State_State_$Impl_$.ofConstant(initial.max);
-	var _g = initial.showWordList;
+	var _g = initial.beginning;
 	var tmp;
 	if(_g == null) {
-		tmp = tink_state__$State_State_$Impl_$.ofConstant(false);
+		tmp = tink_state__$State_State_$Impl_$.ofConstant(true);
 	} else {
 		var v = _g;
 		tmp = tink_state__$State_State_$Impl_$.ofConstant(v);
 	}
-	this.__coco_showWordList = tmp;
+	this.__coco_beginning = tmp;
+	var _g1 = initial.middle;
+	var tmp1;
+	if(_g1 == null) {
+		tmp1 = tink_state__$State_State_$Impl_$.ofConstant(true);
+	} else {
+		var v1 = _g1;
+		tmp1 = tink_state__$State_State_$Impl_$.ofConstant(v1);
+	}
+	this.__coco_middle = tmp1;
+	var _g2 = initial.end;
+	var tmp2;
+	if(_g2 == null) {
+		tmp2 = tink_state__$State_State_$Impl_$.ofConstant(true);
+	} else {
+		var v2 = _g2;
+		tmp2 = tink_state__$State_State_$Impl_$.ofConstant(v2);
+	}
+	this.__coco_end = tmp2;
+	var _g3 = initial.showWordList;
+	var tmp3;
+	if(_g3 == null) {
+		tmp3 = tink_state__$State_State_$Impl_$.ofConstant(false);
+	} else {
+		var v3 = _g3;
+		tmp3 = tink_state__$State_State_$Impl_$.ofConstant(v3);
+	}
+	this.__coco_showWordList = tmp3;
 	this.__coco_filteredList = tink_state__$Observable_Observable_$Impl_$.auto(tink_state__$Observable_Computation_$Impl_$.plain(function() {
-		var tmp1 = _gthis.get_wordList();
-		var tmp2 = _gthis.get_fixChar();
-		var tmp3 = _gthis.get_filter();
-		var tmp4 = _gthis.get_min();
-		var tmp5 = _gthis.get_max();
-		return _gthis.searchAnywhere(tmp1,tmp2,tmp3,tmp4,tmp5);
+		var tmp4 = _gthis.get_wordList();
+		var tmp5 = _gthis.get_fixChar();
+		var tmp6 = _gthis.get_filter();
+		var tmp7 = _gthis.get_min();
+		var tmp8 = _gthis.get_max();
+		return _gthis.searchAnywhere(tmp4,tmp5,tmp6,tmp7,tmp8);
 	}));
 	var this1 = new tink_state__$State_StateObject(0);
 	this.__coco_transitionCount = this1;
 	this.errorTrigger = tink_core__$Signal_Signal_$Impl_$.trigger();
 	this.transitionErrors = this.errorTrigger;
-	this.observables = { wordList : this.__coco_wordList, filter : this.__coco_filter, fixChar : this.__coco_fixChar, min : this.__coco_min, max : this.__coco_max, showWordList : this.__coco_showWordList, filteredList : this.__coco_filteredList, isInTransition : tink_state__$Observable_Observable_$Impl_$.map(this.__coco_transitionCount,tink_state__$Observable_Transform_$Impl_$.plain(function(c) {
+	this.observables = { wordList : this.__coco_wordList, filter : this.__coco_filter, fixChar : this.__coco_fixChar, min : this.__coco_min, max : this.__coco_max, beginning : this.__coco_beginning, middle : this.__coco_middle, end : this.__coco_end, showWordList : this.__coco_showWordList, filteredList : this.__coco_filteredList, isInTransition : tink_state__$Observable_Observable_$Impl_$.map(this.__coco_transitionCount,tink_state__$Observable_Transform_$Impl_$.plain(function(c) {
 		return c > 0;
 	}))};
 };
@@ -281,15 +308,24 @@ WordFilterModel.prototype = {
 		var matches = [];
 		var r;
 		if(fixed != null && fixed != "") {
-			r = new EReg("\n(" + fixed + "[" + others + "]{" + (minLength - 1) + "," + (maxLength - 1) + "})\n","gu");
-			matches = matches.concat(this.map(r,s));
-			r = new EReg("\n([" + others + "]{" + (minLength - 1) + "," + (maxLength - 1) + "}" + fixed + ")\n","gu");
-			matches = matches.concat(this.map(r,s));
-			r = new EReg("\n([" + others + "]{1," + (maxLength - 1) + "}" + fixed + "[" + others + "]{1," + (maxLength - 1) + "})\n","gu");
-			matches = matches.concat(this.map(r,s));
+			var begMatch = this.get_beginning() ? "(?:" + fixed + "[" + others + "]{1," + (maxLength - 1) + "})" : null;
+			var endMatch = this.get_end() ? "(?:[" + others + "]{1," + (maxLength - 1) + "}" + fixed + ")" : null;
+			var midMatch = this.get_middle() ? "(?:[" + others + "]{1," + (maxLength - 1) + "}" + fixed + "[" + others + "]{1," + (maxLength - 1) + "})" : null;
+			var matchArr = [];
+			if(begMatch != null) {
+				matchArr.push(begMatch);
+			}
+			if(endMatch != null) {
+				matchArr.push(endMatch);
+			}
+			if(midMatch != null) {
+				matchArr.push(midMatch);
+			}
+			r = new EReg("^(" + matchArr.join("|") + ")$","gmu");
+			matches = this.map(r,s);
 		} else {
 			r = new EReg("\n([" + others + "]{" + minLength + "," + maxLength + "})\n","gu");
-			matches = matches.concat(this.map(r,s));
+			matches = this.map(r,s);
 		}
 		return tink_pure__$List_List_$Impl_$.fromArray(matches);
 	}
@@ -335,6 +371,27 @@ WordFilterModel.prototype = {
 	}
 	,set_max: function(param) {
 		this.__coco_max.set(param);
+		return param;
+	}
+	,get_beginning: function() {
+		return tink_state__$State_State_$Impl_$.get_value(this.__coco_beginning);
+	}
+	,set_beginning: function(param) {
+		this.__coco_beginning.set(param);
+		return param;
+	}
+	,get_middle: function() {
+		return tink_state__$State_State_$Impl_$.get_value(this.__coco_middle);
+	}
+	,set_middle: function(param) {
+		this.__coco_middle.set(param);
+		return param;
+	}
+	,get_end: function() {
+		return tink_state__$State_State_$Impl_$.get_value(this.__coco_end);
+	}
+	,set_end: function(param) {
+		this.__coco_end.set(param);
 		return param;
 	}
 	,get_showWordList: function() {
@@ -480,28 +537,39 @@ WordFilterView.prototype = $extend(coconut_ui_View.prototype,{
 		var children = vdom_VDom.h("input",{ oninput : function(event) {
 			model.set_filter(event.target.value);
 		}, value : model.get_filter(), style : vdom__$Style_Style_$Impl_$.ofString("width: 250px;")});
-		var children1 = vdom_VDom.h("input",{ oninput : function(event1) {
+		var children1 = vdom_VDom.h("br",{ });
+		var children2 = vdom_VDom.h("input",{ oninput : function(event1) {
 			model.set_fixChar(event1.target.value);
 		}, value : model.get_fixChar(), style : vdom__$Style_Style_$Impl_$.ofString("width: 50px;")});
-		var children2 = vdom_VDom.h("input",{ id : "min", oninput : function(event2) {
+		var children3 = vdom_VDom.h("input",{ type : "checkbox", onchange : function(event2) {
+			model.set_beginning(event2.target.checked);
+		}, checked : model.get_beginning()});
+		var children4 = vdom_VDom.h("input",{ type : "checkbox", onchange : function(event3) {
+			model.set_middle(event3.target.checked);
+		}, checked : model.get_middle()});
+		var children5 = vdom_VDom.h("input",{ type : "checkbox", onchange : function(event4) {
+			model.set_end(event4.target.checked);
+		}, checked : model.get_end()});
+		var children6 = vdom_VDom.h("br",{ });
+		var children7 = vdom_VDom.h("input",{ id : "min", oninput : function(event5) {
 			var attr;
-			var a = Std.parseInt(event2.target.value);
+			var a = Std.parseInt(event5.target.value);
 			if(_$UInt_UInt_$Impl_$.gte(model.get_max(),a)) {
-				attr = Std.parseInt(event2.target.value);
+				attr = Std.parseInt(event5.target.value);
 			} else {
 				attr = model.get_max();
 			}
 			model.set_min(attr);
 		}, value : Std.string(_$UInt_UInt_$Impl_$.toFloat(model.get_min())), style : vdom__$Style_Style_$Impl_$.ofString("width: 50px;")});
-		var children3 = vdom_VDom.h("input",{ id : "max", oninput : function(event3) {
-			var attr1 = _$UInt_UInt_$Impl_$.gte(Std.parseInt(event3.target.value),model.get_min()) ? Std.parseInt(event3.target.value) : model.get_min();
+		var children8 = vdom_VDom.h("input",{ id : "max", oninput : function(event6) {
+			var attr1 = _$UInt_UInt_$Impl_$.gte(Std.parseInt(event6.target.value),model.get_min()) ? Std.parseInt(event6.target.value) : model.get_min();
 			model.set_max(attr1);
 		}, value : Std.string(_$UInt_UInt_$Impl_$.toFloat(model.get_max())), style : vdom__$Style_Style_$Impl_$.ofString("width: 50px;")});
-		var children4 = vdom_VDom.h("button",{ onclick : function(event4) {
+		var children9 = vdom_VDom.h("button",{ onclick : function(event7) {
 			_gthis.copy();
 		}},["Copy to clipboard"]);
-		var children5 = vdom_VDom.h("textarea",{ id : "wordList", oninput : function(event5) {
-			model.set_wordList(event5.target.value);
+		var children10 = vdom_VDom.h("textarea",{ id : "wordList", oninput : function(event8) {
+			model.set_wordList(event8.target.value);
 		}, style : vdom__$Style_Style_$Impl_$.ofString("display:" + (model.get_showWordList() ? "block" : "none") + "; float:left; width:49%; height: 500px; margin: 5px")},[model.get_wordList()]);
 		var attr2 = { id : "filteredWordList", style : vdom__$Style_Style_$Impl_$.ofString("float:left; width:49%; margin: 5px; border: 1px solid black; min-height: 200px")};
 		var _g = [];
@@ -510,17 +578,17 @@ WordFilterView.prototype = $extend(coconut_ui_View.prototype,{
 			var i = _g1.next();
 			_g.push(vdom__$VNode_VNode_$Impl_$.flatten([vdom_VDom.h("div",{ },[i])]));
 		}
-		var children6 = [children5,vdom_VDom.h("div",attr2,[vdom__$VNode_VNode_$Impl_$.flatten(_g)])];
-		var children7 = vdom_VDom.h("div",{ },children6);
-		var children8 = vdom_VDom.h("div",{ style : vdom__$Style_Style_$Impl_$.ofString("clear:both")},null);
+		var children11 = [children10,vdom_VDom.h("div",attr2,[vdom__$VNode_VNode_$Impl_$.flatten(_g)])];
+		var children12 = vdom_VDom.h("div",{ },children11);
+		var children13 = vdom_VDom.h("div",{ style : vdom__$Style_Style_$Impl_$.ofString("clear:both")},null);
 		var this1 = model.get_filteredList();
 		var i1 = this1 == null ? 0 : this1.length;
-		var children9 = vdom_VDom.h("br",{ });
-		var children10 = model.get_showWordList() ? "Hide" : "Show";
-		var children11 = ["Filter: ",children,"Fix char: ",children1,"Min: ",children2,"Max: ",children3,children4,children7,children8,"Results: ",i1 == null ? "null" : "" + i1,children9,vdom_VDom.h("button",{ onclick : function(event6) {
+		var children14 = vdom_VDom.h("br",{ });
+		var children15 = model.get_showWordList() ? "Hide" : "Show";
+		var children16 = ["Filter: ",children,"  ",children1,"Fix char: ",children2,children3," Beginning",children4," Middle",children5," End",children6,"Min: ",children7,"Max: ",children8,children9,children12,children13,"Results: ",i1 == null ? "null" : "" + i1,children14,vdom_VDom.h("button",{ onclick : function(event9) {
 			model.set_showWordList(!model.get_showWordList());
-		}},[children10," original WordList"])];
-		return vdom_VDom.h("div",{ },children11);
+		}},[children15," original WordList"])];
+		return vdom_VDom.h("div",{ },children16);
 	}
 	,copy: function() {
 		var range = window.document.createRange();
