@@ -61,6 +61,7 @@ class WordFilterModel implements Model
 			r = new EReg("^(" + matchArr.join("|") + ")$", "gmu");
 			
 			matches = map(r, s);
+			matches = matches.filter( function(s) return s.length >= minLength && s.length <= maxLength );
 		}
 		else
 		{
